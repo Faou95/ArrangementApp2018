@@ -43,13 +43,51 @@
 
 
     <TextView
-        android:id="@+id/subTitle"
+        android:id="@+id/comment"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:layout_below="@id/title"
         android:text="@string/arr_info_placeholder" />
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment"
+        android:padding="6dp"
+        android:text="DATE" />
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment"
+        android:padding="6dp"
+        android:text="Time"
+        android:layout_toRightOf="@id/date" />
+
+    <TextView
+        android:id="@+id/age"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:padding="6dp"
+        android:text="Age" />
+
+    <TextView
+        android:id="@+id/fee"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:padding="6dp"
+        android:text="Fee"
+        android:layout_toRightOf="@id/age" />
 
 
 </RelativeLayout>

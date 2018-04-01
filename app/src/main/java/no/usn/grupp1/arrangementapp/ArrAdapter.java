@@ -2,12 +2,16 @@ package no.usn.grupp1.arrangementapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -23,11 +27,14 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
     private ArrayList<Arrangement> mArrData;
     private Context mContext;
 
+    private int selectedPos = 0;
+
 
     public ArrAdapter(Context mContext, ArrayList<Arrangement>  mArrData) {
         this.mArrData = mArrData;
         this.mContext = mContext;
     }
+
 
 
     @Override
@@ -37,16 +44,29 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ArrAdapter.ViewHolder holder, int position) {
-        //Get current sport
+
+        //Get current event
         Arrangement currentArr = mArrData.get(position);
         //Populate the textviews with data
         holder.bindTo(currentArr);
 
-        Glide.with(mContext)
-                .load(currentArr.getImageResource())
-                .override(600,400)
-                .centerCrop()
-                .into(holder.mArrImage);
+        if(mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            Glide.with(mContext)
+                    .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos() +1))
+                    .override(600,600)
+                    .centerCrop()
+                    .into(holder.mArrImage);
+        }
+
+        if(mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            Glide.with(mContext)
+                    //.load(currentArr.getImageResource())
+                    .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos() +1))
+                    .override(600,400)
+                    .centerCrop()
+                    .into(holder.mArrImage);
+        }
+
     }
 
     @Override
@@ -54,11 +74,15 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
         return mArrData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder{
 
         //Member Variables for the TextViews
         private TextView mTitleText;
         private TextView mInfoText;
+        private TextView mDateText;
+        private TextView mTimeText;
+        private TextView mAgeText;
+        private TextView mFeeText;
         private ImageView mArrImage;
 
         /**
@@ -70,26 +94,37 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
             //Initialize the views
             mTitleText = itemView.findViewById(R.id.title);
-            mInfoText = itemView.findViewById(R.id.subTitle);
+            mInfoText = itemView.findViewById(R.id.comment);
+            mDateText = itemView.findViewById(R.id.date);
+            mTimeText = itemView.findViewById(R.id.time);
+            mAgeText = itemView.findViewById(R.id.age);
+            mFeeText = itemView.findViewById(R.id.fee);
             mArrImage = itemView.findViewById(R.id.arrImage);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
         void bindTo(Arrangement currentArr){
             //Populate the textviews with data
             mTitleText.setText(currentArr.getTittel());
             mInfoText.setText(currentArr.getDescription());
+            mDateText.setText(currentArr.getDate());
+            mTimeText.setText(currentArr.getTime());
+            mAgeText.setText(currentArr.getAge());
+            mFeeText.setText(currentArr.getFee());
 
         }
 
+        /*
         @Override
         public void onClick(View view) {
             Arrangement currentArr = mArrData.get(getAdapterPosition());
 
             Intent detailIntent = new Intent(mContext, DetailArrActivity.class);
             detailIntent.putExtra("title", currentArr.getTittel());
-            detailIntent.putExtra("image_resource", currentArr.getImageResource());
+            //detailIntent.putExtra("image_resource", currentArr.getImageResource());
             mContext.startActivity(detailIntent);
         }
+        */
+
     }
 }

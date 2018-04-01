@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ArrangementApp.iml" filepath="$PROJECT_DIR$/ArrangementApp.iml" />
+      <module fileurl="file://D:\AppUtviklingGithub\ArrangementApp2018\ArrangementApp.iml" filepath="D:\AppUtviklingGithub\ArrangementApp2018\ArrangementApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ArrangementApp2018.iml" filepath="$PROJECT_DIR$/ArrangementApp2018.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
