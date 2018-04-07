@@ -74,6 +74,7 @@
     <string name="title">Eldøy Kulturpark</string>
     <string name="desc">Velkommen til oss. Eldøy Kulturpark er et kultursted som arrangerer
     diverse konsert og kultur opplevelser</string>
+    <string name="title_activity_seat_selection">SeatSelectionActivity</string>
 
 
 </resources>
