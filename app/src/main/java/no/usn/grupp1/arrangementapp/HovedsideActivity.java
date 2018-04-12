@@ -38,7 +38,6 @@ public class HovedsideActivity extends AppCompatActivity {
     private ArrayList<Arrangement> mArrData;
     private ArrAdapter ArrAdapter;
     private SessionManager session;
-    public static int arrLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ public class HovedsideActivity extends AppCompatActivity {
 
         initData d = new initData();
         d.execute((Void) null);
-
     }
 
     public class initData extends AsyncTask<Void, Void, Boolean>{
@@ -109,7 +107,7 @@ public class HovedsideActivity extends AppCompatActivity {
                     try {
                         JSONObject events = response.getJSONObject("event");
                         JSONArray eventsArray = events.getJSONArray("records");
-                        arrLength = eventsArray.length();
+
                         //Clear the existing data (to avoid duplication)
                         mArrData.clear();
 

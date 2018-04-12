@@ -3,14 +3,11 @@ package no.usn.grupp1.arrangementapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -30,20 +27,6 @@ public class MainActivity extends AppCompatActivity {
         desc.setText(R.string.desc);
         Button arrInfo = findViewById(R.id.viewArr);
         arrInfo.setText("Vis arrangement");
-        arrInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HovedsideActivity.class);
-                try{
-
-                    startActivity(intent);
-                }
-                catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.toString(),
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
         Glide.with(this).load(R.drawable.picture1).into(mainImage);
 
         session = new SessionManager(getApplicationContext());

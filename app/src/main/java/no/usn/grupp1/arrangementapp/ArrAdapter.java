@@ -65,37 +65,7 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                     .override(600,400)
                     .centerCrop()
                     .into(holder.mArrImage);
-
-            if(currentArr.getPos() == 0){
-                Glide.with(mContext)
-                        //.load(currentArr.getImageResource())
-                        .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos() +2))
-                        .centerCrop()
-                        .into(holder.mArrImageRight);
-            }
-            else if(currentArr.getPos() == HovedsideActivity.arrLength){
-                Glide.with(mContext)
-                        //.load(currentArr.getImageResource())
-                        .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos()))
-                        .centerCrop()
-                        .into(holder.mArrImageLeft);
-            }
-            else{
-                Glide.with(mContext)
-                        //.load(currentArr.getImageResource())
-                        .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos() +2))
-                        .centerCrop()
-                        .into(holder.mArrImageRight);
-
-                Glide.with(mContext)
-                        //.load(currentArr.getImageResource())
-                        .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos()))
-                        .centerCrop()
-                        .into(holder.mArrImageLeft);
-            }
-
         }
-
 
     }
 
@@ -114,8 +84,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
         private TextView mAgeText;
         private TextView mFeeText;
         private ImageView mArrImage;
-        private ImageView mArrImageLeft;
-        private ImageView mArrImageRight;
 
         /**
          * Constructor for the ViewHolder, used in onCreateViewHolder().
@@ -132,9 +100,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
             mAgeText = itemView.findViewById(R.id.age);
             mFeeText = itemView.findViewById(R.id.fee);
             mArrImage = itemView.findViewById(R.id.arrImage);
-            mArrImageLeft = itemView.findViewById(R.id.arrImageLeft);
-            mArrImageRight = itemView.findViewById(R.id.arrImageRight);
-
             //itemView.setOnClickListener(this);
         }
 

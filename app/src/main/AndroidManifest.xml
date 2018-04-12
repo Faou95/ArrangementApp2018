@@ -16,11 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity android:name=".SeatSelectionActivity">
-=======
-        <activity android:name=".MainActivity">
->>>>>>> ee0edb5e43cf9a583ffdb6917e402ad59d69d8b1
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,15 +29,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".DetailArrActivity" />
         <activity android:name=".UserProfileActivity" />
-<<<<<<< HEAD
         <activity android:name=".HovedsideActivity"></activity>
-=======
-        <activity android:name=".HovedsideActivity" />
-        <activity
-            android:name=".SeatSelectionActivity"
-            android:label="@string/title_activity_seat_selection"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> ee0edb5e43cf9a583ffdb6917e402ad59d69d8b1
     </application>
 
 </manifest>
