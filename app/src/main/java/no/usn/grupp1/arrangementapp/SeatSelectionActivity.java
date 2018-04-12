@@ -56,8 +56,8 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 toast.show();
             }
         });
-        //ImageView im = findViewById(R.id.sceneBilde);
-        //Glide.with(this).load(R.drawable.scene).into(im);
+        ImageView im = findViewById(R.id.sceneBilde);
+        Glide.with(this).load(R.drawable.scene).into(im);
 
     }
     private void initializeData() {
