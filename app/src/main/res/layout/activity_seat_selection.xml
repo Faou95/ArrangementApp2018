@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,12 @@
     tools:context="no.usn.grupp1.arrangementapp.SeatSelectionActivity"
 
     >
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sceneBilde"
+
+    />
 
 <GridView
     android:id="@+id/gridview"
@@ -15,8 +21,9 @@
     android:columnWidth="100dp"
     android:stretchMode="columnWidth"
     android:gravity="center"
-    android:numColumns="auto_fit"
+    android:numColumns="5"
+
     >
 </GridView>
 
-</LinearLayout>
+</RelativeLayout>

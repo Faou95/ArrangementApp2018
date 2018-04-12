@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class SeatSelectionActivity extends AppCompatActivity {
+
 
     GridView grid;
     int[] seatId = new int[20];
@@ -42,6 +45,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_selection);
 
+
         SeatAdapter adapter = new SeatAdapter(seatId,SeatSelectionActivity.this);
         grid = findViewById(R.id.gridview);
         grid.setAdapter(adapter);
@@ -52,6 +56,8 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+        //ImageView im = findViewById(R.id.sceneBilde);
+        //Glide.with(this).load(R.drawable.scene).into(im);
 
     }
     private void initializeData() {
@@ -71,26 +77,17 @@ public class SeatSelectionActivity extends AppCompatActivity {
                             JSONObject event = ticketsArray.getJSONObject(i);
                             int SeatID = event.getInt("SeatID");
                             sjekk.add(SeatID);
-                            /*String seat = "" + SeatID;
-                            seatId[(SeatID-1)]= R.drawable.opptattsete;
-                            Toast toast = Toast.makeText(getApplicationContext(),seat,Toast.LENGTH_LONG);
-                            toast.show();
-                            Log.d("Sete", seat);*/
                             for (int j= 0; j<seatId.length; j++){
 
                                 if(sjekk.contains(j)){
                                     seatId[j-1]=R.drawable.opptattsete;
+                                    seatId[j]=R.drawable.ledigsete;
 
 
                                 }else{
                                     seatId[j]=R.drawable.ledigsete;
                                 }}
                         }
-
-
-                        //Notify the adapter of the change
-                        //SeatAdapter.notifyDataSetChanged();
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
