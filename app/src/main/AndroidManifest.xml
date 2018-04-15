@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SeatSelectionActivity">
+        <activity android:name=".HovedsideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".DetailArrActivity" />
         <activity android:name=".UserProfileActivity" />
-        <activity android:name=".HovedsideActivity"></activity>
+        <activity android:name=".SeatSelectionActivity"></activity>
     </application>
 
 </manifest>

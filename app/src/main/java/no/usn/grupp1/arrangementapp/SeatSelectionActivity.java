@@ -35,16 +35,22 @@ public class SeatSelectionActivity extends AppCompatActivity {
     GridView grid;
     int[] seatId = new int[20];
     List<Integer> sjekk = new ArrayList<>();
+    String eventID;
+    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_seat_selection);
+        eventID = getIntent().getStringExtra("eventID");
+        title = getIntent().getStringExtra("title");
         initializeData();
 
 
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seat_selection);
 
+        Toast toast = Toast.makeText(getApplicationContext(),title.toString(),Toast.LENGTH_LONG);
+        toast.show();
 
         SeatAdapter adapter = new SeatAdapter(seatId,SeatSelectionActivity.this);
         grid = findViewById(R.id.gridview);
@@ -63,7 +69,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
     private void initializeData() {
 
 
-        String seatURL = getString(R.string.endpoint)+"/ticket?filter=EventID,eq,1&transform=1";
+        String seatURL = getString(R.string.endpoint)+"/ticket?filter=EventID,eq,"+ eventID +"&transform=1";
 
         if (isOnline()){
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());

@@ -13,8 +13,11 @@ public class Arrangement {
     private String age;
     private int fee;
     private final int pos;
+    private final int eventID;
 
-    public Arrangement(String tittel, String description, String date, String time, String age, int fee , int pos) {
+
+
+    public Arrangement(String tittel, String description, String date, String time, String age, int fee , int pos, int eventID) {
         this.tittel = tittel;
         this.description = description;
         this.date = date;
@@ -22,7 +25,10 @@ public class Arrangement {
         this.age = age;
         this.fee = fee;
         this.pos = pos;
+
+        this.eventID = eventID;
     }
+
 
 
     public String getTittel() {
@@ -54,5 +60,9 @@ public class Arrangement {
 
     public int getPos() {
         return pos;
+    }
+
+    public int getEventID() {
+        return eventID;
     }
 }

@@ -123,7 +123,7 @@ public class HovedsideActivity extends AppCompatActivity {
                             String Age = event.getString(7);
                             int Fee = event.getInt(8);
                             int Active = event.getInt(9);
-                            mArrData.add(new Arrangement(Name ,Comment, Date, Time, Age, Fee, i));
+                            mArrData.add(new Arrangement(Name ,Comment, Date, Time, Age, Fee, i,EventID));
                         }
 
                         //Notify the adapter of the change

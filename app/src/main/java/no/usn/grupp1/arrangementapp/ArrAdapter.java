@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,8 +48,10 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
         //Get current event
         Arrangement currentArr = mArrData.get(position);
+
         //Populate the textviews with data
         holder.bindTo(currentArr);
+
 
         if(mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             Glide.with(mContext)
@@ -100,7 +103,22 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
             mAgeText = itemView.findViewById(R.id.age);
             mFeeText = itemView.findViewById(R.id.fee);
             mArrImage = itemView.findViewById(R.id.arrImage);
-            //itemView.setOnClickListener(this);
+
+            //Create ticket button
+            Button ticket = itemView.findViewById(R.id.ticketbtn);
+            ticket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Arrangement currentArr = mArrData.get(getAdapterPosition());
+
+                    Intent detailIntent = new Intent(mContext, SeatSelectionActivity.class);
+                    detailIntent.putExtra("title", currentArr.getTittel());
+                    detailIntent.putExtra("eventID", currentArr.getEventID());
+                    mContext.startActivity(detailIntent);
+
+                }
+            });
+
         }
 
         void bindTo(Arrangement currentArr){
@@ -114,17 +132,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
         }
 
-        /*
-        @Override
-        public void onClick(View view) {
-            Arrangement currentArr = mArrData.get(getAdapterPosition());
-
-            Intent detailIntent = new Intent(mContext, DetailArrActivity.class);
-            detailIntent.putExtra("title", currentArr.getTittel());
-            //detailIntent.putExtra("image_resource", currentArr.getImageResource());
-            mContext.startActivity(detailIntent);
-        }
-        */
 
     }
 }

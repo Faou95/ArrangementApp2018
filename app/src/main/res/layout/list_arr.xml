@@ -89,6 +89,15 @@
         android:text="Fee"
         android:layout_toRightOf="@id/age" />
 
+    <Button
+        android:id="@+id/ticketbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/holo_green_light"
+        android:text="Billett"
+        android:textColor="@android:color/black" />
+
 
 </RelativeLayout>
 
