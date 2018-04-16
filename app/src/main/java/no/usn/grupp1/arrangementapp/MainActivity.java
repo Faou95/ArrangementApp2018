@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         setContentView(R.layout.activity_main);
         ImageView mainImage = findViewById(R.id.mainImage);
         TextView title = findViewById(R.id.mainTitle);
@@ -28,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
         Button arrInfo = findViewById(R.id.viewArr);
         arrInfo.setText("Vis arrangement");
         Glide.with(this).load(R.drawable.picture1).into(mainImage);
+
+        arrInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ArrActivity.class);
+                startActivity(i);
+            }
+        });
 
         session = new SessionManager(getApplicationContext());
     }

@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HovedsideActivity extends AppCompatActivity {
+public class ArrActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private ArrayList<Arrangement> mArrData;
@@ -79,23 +79,7 @@ public class HovedsideActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        // IF WE NEED TO CHECK LANDSCAPE OR PORTRAIT
-        /*
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
 
-        }
-
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-
-        }*/
-
-        // OLD SHIT
-        /*
-        //Get the resources from the XML file
-        String[] arrListe = getResources().getStringArray(R.array.arr_tittel);
-        String[] arrInfo = getResources().getStringArray(R.array.arr_info);
-
-        */
 
         String events = getString(R.string.endpoint)+"/event";
 

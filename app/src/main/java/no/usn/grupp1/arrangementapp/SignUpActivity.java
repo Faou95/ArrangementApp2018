@@ -1,6 +1,9 @@
 package no.usn.grupp1.arrangementapp;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +12,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.android.volley.toolbox.Volley.newRequestQueue;
+
 public class SignUpActivity extends AppCompatActivity {
+
+    private String endpoint;
+    private RequestQueue queue;
 
     private EditText mName;
     private EditText mEmail;
@@ -25,6 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.email_signup);
         mPassword = findViewById(R.id.password_signup);
         mPasswordRepeat = findViewById(R.id.password_repeat_signup);
+
+        endpoint = getString(R.string.endpoint);
 
         Button mSignUpButton = findViewById(R.id.email_sign_up_button);
         mSignUpButton.setOnClickListener(new View.OnClickListener(){
@@ -44,6 +65,21 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
 
+
+        JSONObject nyBruker = new JSONObject();
+        try {
+            nyBruker.put("Username", mName.getText().toString());
+            nyBruker.put("Password", mPassword.getText().toString());
+            nyBruker.put("Email", mEmail.getText().toString());
+            nyBruker.put("IsAdmin", "0");
+
+            checkUsers(nyBruker);
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        /*
         for (String credential : getResources().getStringArray(R.array.userInfo)) {
             String email = mEmail.getText().toString();
             String[] pieces = credential.split(":");
@@ -53,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
             else {
                 onSignupSuccess();
             }
-        }
+        }*/
     }
 
     public void onSignupFailed() {
@@ -63,10 +99,30 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onSignupSuccess() {
+    public void onSignupSuccess(JSONObject nyBruker) {
         // TODO registrere bruker i databasen
         // TODO logg inn brukeren etter registrering og gå tilbake til hovedside
         // TODO eller tilbake til sign in og brukeren og logge inn selv
+        queue = newRequestQueue(getApplicationContext());
+
+        String bruker_URL = endpoint + "/user";
+
+        if(isOnline()){
+            JsonObjectRequest JSONRequest = new JsonObjectRequest(Request.Method.POST, bruker_URL, nyBruker, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }, new Response.ErrorListener(){
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            queue.add(JSONRequest);
+        }
+
 
         finish();
     }
@@ -109,5 +165,51 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void checkUsers(final JSONObject nyBruker){
+        if (isOnline()){
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String user_URL = endpoint+"/user?filter=Email,eq," +mEmail.getText().toString()+"&transform=1";
+            JsonObjectRequest JSONRequest = new JsonObjectRequest(Request.Method.GET, user_URL , null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray temp = response.getJSONArray("user");
+
+                        if(temp.length() == 0){
+                            onSignupSuccess(nyBruker);
+                        }
+                        else{
+                            Toast toast = Toast.makeText(getApplicationContext(),"Bruker finnes",Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast toast = Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+
+
+                }
+            }, new Response.ErrorListener(){
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            });
+            queue.add(JSONRequest);
+        }
     }
 }

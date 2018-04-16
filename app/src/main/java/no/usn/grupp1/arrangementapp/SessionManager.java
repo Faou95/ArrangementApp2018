@@ -77,8 +77,8 @@ public class SessionManager {
         editor.clear();
         editor.commit();
 
-        // Redirect to HovedsideActivity after logout
-        Intent intent = new Intent(_context, HovedsideActivity.class);
+        // Redirect to ArrActivity after logout
+        Intent intent = new Intent(_context, ArrActivity.class);
 
         // Closing all the activities
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

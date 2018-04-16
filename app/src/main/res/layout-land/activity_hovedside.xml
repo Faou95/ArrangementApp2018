@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    tools:context="no.usn.grupp1.arrangementapp.HovedsideActivity">
+    tools:context="no.usn.grupp1.arrangementapp.ArrActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
