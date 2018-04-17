@@ -3,6 +3,7 @@ package no.usn.grupp1.arrangementapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import cz.intik.overflowindicator.OverflowPagerIndicator;
+
 /**
  * Created by finge on 16.02.2018.
  */
@@ -28,10 +31,8 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
     private ArrayList<Arrangement> mArrData;
     private Context mContext;
 
-    private int selectedPos = 0;
 
-
-    public ArrAdapter(Context mContext, ArrayList<Arrangement>  mArrData) {
+    public ArrAdapter(Context mContext, ArrayList<Arrangement>  mArrData ) {
         this.mArrData = mArrData;
         this.mContext = mContext;
     }
@@ -45,7 +46,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ArrAdapter.ViewHolder holder, int position) {
-
         //Get current event
         Arrangement currentArr = mArrData.get(position);
 
@@ -70,12 +70,13 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                     .into(holder.mArrImage);
         }
 
+
+        String pos = "" + currentArr.getPos();
+        Log.d("POSITION", pos);
     }
 
     @Override
-    public int getItemCount() {
-        return mArrData.size();
-    }
+    public int getItemCount() {return mArrData.size();}
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -94,7 +95,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
          */
         ViewHolder(View itemView) {
             super(itemView);
-
             //Initialize the views
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.comment);
@@ -110,7 +110,7 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Arrangement currentArr = mArrData.get(getAdapterPosition());
-
+                    Log.d("Title", currentArr.getTittel());
                     Intent detailIntent = new Intent(mContext, LoadSeatData.class);
                     detailIntent.putExtra("title", currentArr.getTittel());
                     detailIntent.putExtra("eventID", currentArr.getEventID());

@@ -1,11 +1,14 @@
 package no.usn.grupp1.arrangementapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -26,12 +29,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.android.volley.toolbox.Volley.newRequestQueue;
+
 public class SeatSelectionActivity extends AppCompatActivity {
 
-
+    private SessionManager session;
     GridView grid;
     int[] seatId;
     List<Integer> sjekk = new ArrayList<>();
@@ -45,6 +51,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
         eventID = getIntent().getStringExtra("eventID");
         title = getIntent().getStringExtra("title");
         seatId = getIntent().getIntArrayExtra("OpptatteSeter");
+        session = new SessionManager(getApplicationContext());
         //initializeData();
 
 
@@ -61,12 +68,70 @@ public class SeatSelectionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast toast = Toast.makeText(getApplicationContext(),"Sete er valgt",Toast.LENGTH_LONG);
                 toast.show();
+
+                if(session.isLoggedIn()){
+                    // ledig sete
+                    if(seatId[position] == 1){
+                        ImageView v = view.findViewById(R.id.seatImage);
+                        Glide.with(getApplicationContext()).load(R.drawable.valgtsete).into(v);
+                        velgSete((int) id, position);
+                    }
+                    // opptatt sete
+                    else{
+                        Log.d("SETE", "OPPTATT");
+                    }
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
         ImageView im = findViewById(R.id.sceneBilde);
         Glide.with(this).load(R.drawable.scene).into(im);
 
     }
+
+    public void velgSete(int eventID, int seatID) {
+        // Får tak i bruker ID fra session manager
+        HashMap<String, String> user = session.getUserDetails();
+        int id =  Integer.parseInt(user.get(SessionManager.KEY_ID));
+
+        // lager et nytt ticket object
+        JSONObject nyTicket = new JSONObject();
+        try {
+            nyTicket.put("EventID", Integer.toString(eventID+1));
+            nyTicket.put("SeatID", Integer.toString(seatID+1));
+            nyTicket.put("UserID", user.get(SessionManager.KEY_ID));
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Log.d("TICKET", nyTicket.toString());
+
+        RequestQueue queue = newRequestQueue(getApplicationContext());
+
+        String ticket_URL =  getString(R.string.endpoint) + "/ticket";
+
+        if(isOnline()){
+            JsonObjectRequest JSONRequest = new JsonObjectRequest(Request.Method.POST, ticket_URL, nyTicket, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }, new Response.ErrorListener(){
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            queue.add(JSONRequest);
+        }
+    }
+
     private void initializeData() {
 
 
@@ -119,6 +184,36 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.logedinmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.hovedmenu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login:
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+                return true;
+            case R.id.userInfo:
+                Intent userIntent = new Intent(this, UserProfileActivity.class);
+                startActivity(userIntent);
+                return true;
+            case R.id.logout:
+                session.logoutUser();
+            default:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     public boolean isOnline() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

@@ -27,5 +27,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator
+        android:id="@+id/recyclerview_pager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:dotColor="#5D5D5D"
+        app:selectedDotColor="#4AE4FF"
+        app:dotRadius="6dp"
+        app:selectedDotRadius="8dp"
+        />
+
+
 
 </RelativeLayout>

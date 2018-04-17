@@ -3,9 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ArrangementApp2018.iml" filepath="$PROJECT_DIR$/ArrangementApp2018.iml" />
+      <module fileurl="file://C:\Users\Phuc\Documents\GitHub\ArrangementApp2018\ArrangementApp2018.iml" filepath="C:\Users\Phuc\Documents\GitHub\ArrangementApp2018\ArrangementApp2018.iml" />
       <module fileurl="file://C:\Users\Rajak\Documents\GitHub\ArrangementApp2018\ArrangementApp2018.iml" filepath="C:\Users\Rajak\Documents\GitHub\ArrangementApp2018\ArrangementApp2018.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Rajak\Documents\GitHub\ArrangementApp2018\app\app.iml" filepath="C:\Users\Rajak\Documents\GitHub\ArrangementApp2018\app\app.iml" />
+      <module fileurl="file://C:\Users\Phuc\Documents\GitHub\ArrangementApp2018\app\app.iml" filepath="C:\Users\Phuc\Documents\GitHub\ArrangementApp2018\app\app.iml" />
     </modules>
   </component>
 </project>

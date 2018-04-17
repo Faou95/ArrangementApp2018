@@ -83,8 +83,6 @@ public class LoadSeatData extends AppCompatActivity {
                                 }}
 
 
-
-
                         }
                         /*for (int j= 0; j<seatId.length; j++){
                             String id = "" + seatId[j];
@@ -126,6 +124,7 @@ public class LoadSeatData extends AppCompatActivity {
         intent.putExtra("OpptatteSeter", seatId);
         intent.putExtra("title", title);
         intent.putExtra("eventID", eventID);
+
         startActivity(intent);
     }
 }

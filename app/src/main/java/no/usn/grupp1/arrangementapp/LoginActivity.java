@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -290,8 +291,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             JSONObject tmp = temp.getJSONObject(0);
 
                             if (tmp.getString("Password").equals(mPassword)){
-                                session.createLoginSession(tmp.getString("Username"), tmp.getString("Email"));
+                                session.createLoginSession(tmp.getString("Username"), tmp.getString("Email"), tmp.getString("UserID"));
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                Log.d("NAME", tmp.getString("Username"));
+                                Log.d("Email", tmp.getString("Email"));
+                                Log.d("ID", tmp.getString("UserID"));
                                 startActivity(intent);
 
                             }

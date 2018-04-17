@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,42 +35,74 @@ import java.util.ArrayList;
 
 public class ArrActivity extends AppCompatActivity {
 
+    // https://github.com/rbro112/Android-Indefinite-Pager-Indicator
+
     private RecyclerView mRecyclerView;
     private ArrayList<Arrangement> mArrData;
     private ArrAdapter ArrAdapter;
     private SessionManager session;
+    private IndefinitePagerIndicator indicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hovedside);
         session = new SessionManager(getApplicationContext());
+        //Initialize the ArrayLIst that will contain the data
+        mArrData = new ArrayList<>();
 
         //Initialize the RecyclerView
         mRecyclerView = findViewById(R.id.recyclerView);
+        indicator = findViewById(R.id.recyclerview_pager_indicator);
 
         //Set the Layout Manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        // Add pager behaviour
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(mRecyclerView);
 
-        // pager indicator
-        //mRecyclerView.addItemDecoration(new LinePagerIndicatorDecoration());
-
-        //Initialize the ArrayLIst that will contain the data
-        mArrData = new ArrayList<>();
 
         //Initialize the adapter and set it ot the RecyclerView
         ArrAdapter = new ArrAdapter(this, mArrData);
         mRecyclerView.setAdapter(ArrAdapter);
 
-        initData d = new initData();
-        d.execute((Void) null);
+        // Add pager behaviour
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mRecyclerView);
+        indicator.attachToRecyclerView(mRecyclerView);
+
+        initData data = new initData();
+        data.execute((Void) null);
+
     }
 
-    public class initData extends AsyncTask<Void, Void, Boolean>{
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.logedinmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.hovedmenu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login:
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+                return true;
+            case R.id.userInfo:
+                Intent userIntent = new Intent(this, UserProfileActivity.class);
+                startActivity(userIntent);
+                return true;
+            case R.id.logout:
+                session.logoutUser();
+            default:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public class initData extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
@@ -110,7 +143,6 @@ public class ArrActivity extends AppCompatActivity {
                             mArrData.add(new Arrangement(Name ,Comment, Date, Time, Age, Fee, i,EventID));
                         }
 
-                        //Notify the adapter of the change
                         ArrAdapter.notifyDataSetChanged();
 
 
@@ -135,33 +167,6 @@ public class ArrActivity extends AppCompatActivity {
             queue.add(JSONRequest);
         }
 
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if(session.isLoggedIn()){
-            getMenuInflater().inflate(R.menu.logedinmenu, menu);
-        }else{
-            getMenuInflater().inflate(R.menu.hovedmenu, menu);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.login:
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
-                return true;
-            case R.id.userInfo:
-                Intent userIntent = new Intent(this, UserProfileActivity.class);
-                startActivity(userIntent);
-                return true;
-            case R.id.logout:
-                session.logoutUser();
-            default:
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public boolean isOnline() {
