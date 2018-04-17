@@ -113,14 +113,6 @@ public class ArrActivity extends AppCompatActivity {
                         //Notify the adapter of the change
                         ArrAdapter.notifyDataSetChanged();
 
-                        /*
-                        if (tmp.getString("Password").equals(mPassword)){
-                            session.createLoginSession(tmp.getString("Username"), tmp.getString("Email"));
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-
-                        }
-                        */
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -142,15 +134,6 @@ public class ArrActivity extends AppCompatActivity {
             });
             queue.add(JSONRequest);
         }
-
-        // OLD SHIT
-        /*
-        //Create the ArrayList of Sports objects with the titles and information about each sport
-        for(int i=0;i<arrListe.length;i++){
-            mArrData.add(new Arrangement(arrListe[i],arrInfo[i], i));
-        }
-        */
-
 
     }
     @Override

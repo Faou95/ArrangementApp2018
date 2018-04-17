@@ -111,7 +111,7 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                 public void onClick(View v) {
                     Arrangement currentArr = mArrData.get(getAdapterPosition());
 
-                    Intent detailIntent = new Intent(mContext, TicketActivity.class);
+                    Intent detailIntent = new Intent(mContext, LoadSeatData.class);
                     detailIntent.putExtra("title", currentArr.getTittel());
                     detailIntent.putExtra("eventID", currentArr.getEventID());
                     mContext.startActivity(detailIntent);

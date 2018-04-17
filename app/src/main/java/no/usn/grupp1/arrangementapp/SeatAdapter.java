@@ -54,7 +54,12 @@ public class SeatAdapter extends BaseAdapter{
             seats = new View(context);
             seats = inflater.inflate(R.layout.simple_seat, null);
             ImageView imageView = seats.findViewById(R.id.seatImage);
-            imageView.setImageResource(seatId[position]);
+            //imageView.setImageResource(seatId[position]);
+            if(seatId[position] == 1){
+                Glide.with(context).load(R.drawable.ledigsete).into(imageView);
+            }else{
+                Glide.with(context).load(R.drawable.opptattsete).into(imageView);
+            }
         }
         else {
             seats = convertView;

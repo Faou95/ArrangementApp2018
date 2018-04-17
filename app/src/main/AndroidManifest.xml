@@ -30,7 +30,9 @@
         <activity android:name=".DetailArrActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".ArrActivity" />
-        <activity android:name=".TicketActivity"></activity>
+        <activity android:name=".TicketActivity" />
+        <activity android:name=".LoadSeatData"></activity>
+        <activity android:name=".SeatSelectionActivity"></activity>
     </application>
 
 </manifest>
