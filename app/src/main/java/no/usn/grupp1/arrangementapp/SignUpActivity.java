@@ -1,7 +1,6 @@
 package no.usn.grupp1.arrangementapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -95,8 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onSignupFailed() {
         Toast toast = Toast.makeText(getApplicationContext(), R.string.error_signup_failed, Toast.LENGTH_SHORT);
         toast.show();
-        Intent intent = new Intent(this, SignUpActivity.class);
-        startActivity(intent);
+        recreate();
     }
 
     public void onSignupSuccess(JSONObject nyBruker) {

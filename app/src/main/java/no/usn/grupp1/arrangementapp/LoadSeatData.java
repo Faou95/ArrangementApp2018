@@ -70,17 +70,23 @@ public class LoadSeatData extends AppCompatActivity {
                             String id = "denne" + seatId[i];
                             Log.d("BLIRDEENNEGJORT??: ", id);
                             sjekk.add(SeatID);
+                            String seatid = "" + SeatID;
+                            Log.d("SETE123", seatid);
                             for (int j= 0; j<seatId.length; j++){
 
                                 if(sjekk.contains(j)){
                                     seatId[j-1]=-1;
-                                    seatId[j]=1;
 
 
 
                                 }else{
                                     seatId[j]=1;
-                                }}
+                                }
+                            }
+
+                            if(sjekk.contains(20)){
+                                seatId[19] = -1;
+                            }
 
 
                         }
@@ -124,7 +130,7 @@ public class LoadSeatData extends AppCompatActivity {
         intent.putExtra("OpptatteSeter", seatId);
         intent.putExtra("title", title);
         intent.putExtra("eventID", eventID);
-
+        finish();
         startActivity(intent);
     }
 }

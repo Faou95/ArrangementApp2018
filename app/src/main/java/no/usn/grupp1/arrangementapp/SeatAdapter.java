@@ -55,10 +55,14 @@ public class SeatAdapter extends BaseAdapter{
             seats = inflater.inflate(R.layout.simple_seat, null);
             ImageView imageView = seats.findViewById(R.id.seatImage);
             //imageView.setImageResource(seatId[position]);
-            if(seatId[position] == 1){
-                Glide.with(context).load(R.drawable.ledigsete).into(imageView);
-            }else{
+            if(seatId[position] == -1){
                 Glide.with(context).load(R.drawable.opptattsete).into(imageView);
+            }else{
+                Glide.with(context).load(R.drawable.ledigsete).into(imageView);
+            }
+            for(int i = 0; i<seatId.length; i++){
+                String a = "" + i + "    seatid" + seatId[i];
+                Log.d("SEATID", a);
             }
         }
         else {

@@ -292,12 +292,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             if (tmp.getString("Password").equals(mPassword)){
                                 session.createLoginSession(tmp.getString("Username"), tmp.getString("Email"), tmp.getString("UserID"));
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                Log.d("NAME", tmp.getString("Username"));
-                                Log.d("Email", tmp.getString("Email"));
-                                Log.d("ID", tmp.getString("UserID"));
-                                startActivity(intent);
-
                             }
 
                         } catch (JSONException e) {
