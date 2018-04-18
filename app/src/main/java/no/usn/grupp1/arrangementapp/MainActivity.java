@@ -1,12 +1,8 @@
 package no.usn.grupp1.arrangementapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         desc.setText(R.string.desc);
         Button arrInfo = findViewById(R.id.viewArr);
         arrInfo.setText("Vis arrangement");
-        Glide.with(this).load(R.drawable.picture1).into(mainImage);
+        Glide.with(this).load(R.drawable.hovedbilde).into(mainImage);
 
         arrInfo.setOnClickListener(new View.OnClickListener() {
             @Override
