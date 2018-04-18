@@ -25,10 +25,10 @@ import java.util.List;
 
 public class LoadSeatData extends AppCompatActivity {
 
-    int[] seatId=new int[20];
-    List<Integer> sjekk=new ArrayList<>();;
-    int eventID;
-    String title;
+    private int[] seatId=new int[20];
+    private List<Integer> sjekk=new ArrayList<>();;
+    private int eventID;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -89,7 +89,6 @@ public class SeatSelectionActivity extends AppCompatActivity {
             }
         });
 
-
         /*Toast toast = Toast.makeText(getApplicationContext(),title.toString(),Toast.LENGTH_LONG);
         toast.show();*/
 
@@ -99,11 +98,8 @@ public class SeatSelectionActivity extends AppCompatActivity {
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast toast = Toast.makeText(getApplicationContext(),"Sete er valgt",Toast.LENGTH_LONG);
-                toast.show();
-
+                // ledig sete
                 if(session.isLoggedIn()){
-                    // ledig sete
                     if(seatId[position] != -1){
                         sete = view.findViewById(R.id.seatImage);
                         Glide.with(getApplicationContext()).load(R.drawable.valgtsete).into(sete);
@@ -115,8 +111,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+                    session.checkAndSendLogin();
                 }
 
 
@@ -251,6 +246,24 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
     // Meny
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if(session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.logedinmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.hovedmenu, menu);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        invalidateOptionsMenu();
+        super.onResume();
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(session.isLoggedIn()){
             getMenuInflater().inflate(R.menu.logedinmenu, menu);
@@ -273,6 +286,10 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 session.logoutUser();
+                return true;
+            case R.id.homeButton:
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
             default:
         }
         return super.onOptionsItemSelected(item);

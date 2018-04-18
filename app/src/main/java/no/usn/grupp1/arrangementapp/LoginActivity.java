@@ -20,6 +20,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -156,10 +158,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        if (!email.matches("[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\_\\.]+\\.[a-zA-Z0-9]{3}")){
-            return false;
-        }
-        return true;
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {
@@ -273,7 +272,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // check the user input against the database
-            String username = getString(R.string.endpoint)+"/user?filter=Email,eq,"+mEmail+"&transform=1";
+            String username = getString(R.string.endpoint)+"/user?filter=Email,eq,"+mEmail;
 
             if (isOnline()){
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -281,20 +280,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray temp = response.getJSONArray("user");
-                            JSONObject tmp = temp.getJSONObject(0);
+                            JSONObject user = response.getJSONObject("user");
+                            JSONArray userArray = user.getJSONArray("records");
+                            JSONArray tmp = userArray.getJSONArray(0);
+                            Log.d("USER", tmp.toString());
 
-                            if (tmp.getString("Password").equals(mPassword)){
-                                session.createLoginSession(tmp.getString("Username"), tmp.getString("Email"), tmp.getString("UserID"));
+                            if (tmp.getString(2).equals(mPassword)){
+                                session.createLoginSession(tmp.getString(1), tmp.getString(3), Integer.toString(tmp.getInt(0)));
+                                finish();
                             }
+                            else{
+                                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                                mPasswordView.requestFocus();
+                            }
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast toast = Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG);
                             toast.show();
                         }
-
-
 
                     }
                 }, new Response.ErrorListener(){
@@ -309,7 +315,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 queue.add(JSONRequest);
             }
 
-
             return true;
         }
 
@@ -317,13 +322,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
         }
 
         @Override

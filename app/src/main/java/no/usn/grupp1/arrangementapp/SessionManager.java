@@ -47,8 +47,11 @@ public class SessionManager {
         // Storing id in pref
         editor.putString(KEY_ID, id);
 
-        // apply (commit) changes
-        editor.commit();
+        // Storing name in pref
+        editor.putString(KEY_NAME, name);
+
+        // apply changes
+        editor.apply();
     }
 
     public HashMap<String, String> getUserDetails(){
@@ -85,7 +88,7 @@ public class SessionManager {
         editor.commit();
 
         // Redirect to ArrActivity after logout
-        Intent intent = new Intent(_context, ArrActivity.class);
+        Intent intent = new Intent(_context, MainActivity.class);
 
         // Closing all the activities
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

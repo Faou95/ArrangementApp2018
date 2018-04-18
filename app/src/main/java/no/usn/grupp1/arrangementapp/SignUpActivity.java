@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,6 @@ import static com.android.volley.toolbox.Volley.newRequestQueue;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private String endpoint;
     private RequestQueue queue;
 
     private EditText mName;
@@ -42,8 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.email_signup);
         mPassword = findViewById(R.id.password_signup);
         mPasswordRepeat = findViewById(R.id.password_repeat_signup);
-
-        endpoint = getString(R.string.endpoint);
 
         Button mSignUpButton = findViewById(R.id.email_sign_up_button);
         mSignUpButton.setOnClickListener(new View.OnClickListener(){
@@ -91,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
         // TODO eller tilbake til sign in og brukeren og logge inn selv
         queue = newRequestQueue(getApplicationContext());
 
-        String bruker_URL = endpoint + "/user";
+        String bruker_URL = getString(R.string.endpoint) + "/user";
 
         if(isOnline()){
             JsonObjectRequest JSONRequest = new JsonObjectRequest(Request.Method.POST, bruker_URL, nyBruker, new Response.Listener<JSONObject>() {
@@ -129,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
             mName.setError(null);
         }
 
-        if (!email.matches("[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\_\\.]+\\.[a-zA-Z0-9]{3}")){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             mEmail.setError(getString(R.string.error_invalid_email));
             valid = false;
         } else{
@@ -162,7 +160,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void checkUsers(final JSONObject nyBruker){
         if (isOnline()){
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-            String user_URL = endpoint+"/user?filter=Email,eq," +mEmail.getText().toString()+"&transform=1";
+            String user_URL = getString(R.string.endpoint)+"/user?filter=Email,eq," +mEmail.getText().toString()+"&transform=1";
             JsonObjectRequest JSONRequest = new JsonObjectRequest(Request.Method.GET, user_URL , null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {

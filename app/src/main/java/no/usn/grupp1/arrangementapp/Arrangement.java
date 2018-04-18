@@ -51,6 +51,10 @@ public class Arrangement {
         return temp;
     }
 
+    public int getFeeInt(){
+        return fee;
+    }
+
     public int getPos() {
         return pos;
     }

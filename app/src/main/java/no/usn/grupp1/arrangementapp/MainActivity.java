@@ -1,8 +1,12 @@
 package no.usn.grupp1.arrangementapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         setContentView(R.layout.activity_main);
         ImageView mainImage = findViewById(R.id.mainImage);
@@ -40,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         session = new SessionManager(getApplicationContext());
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if(session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.logedinmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.hovedmenu, menu);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        invalidateOptionsMenu();
+        super.onResume();
+
     }
 
     @Override
@@ -65,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 session.logoutUser();
+                return true;
+            case R.id.homeButton:
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
             default:
         }
         return super.onOptionsItemSelected(item);

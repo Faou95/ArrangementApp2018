@@ -20,10 +20,12 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
     private ArrayList<Arrangement> mArrData;
     private Context mContext;
+    private SessionManager session;
 
     public ArrAdapter(Context mContext, ArrayList<Arrangement>  mArrData ) {
         this.mArrData = mArrData;
         this.mContext = mContext;
+        session = new SessionManager(mContext);
     }
 
     @Override
@@ -99,7 +101,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                     detailIntent.putExtra("title", currentArr.getTittel());
                     detailIntent.putExtra("eventID", currentArr.getEventID());
                     mContext.startActivity(detailIntent);
-
                 }
             });
 

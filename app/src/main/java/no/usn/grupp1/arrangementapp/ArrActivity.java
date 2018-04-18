@@ -147,6 +147,24 @@ public class ArrActivity extends AppCompatActivity {
 
     // MENY
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if(session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.logedinmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.hovedmenu, menu);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        invalidateOptionsMenu();
+        super.onResume();
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(session.isLoggedIn()){
             getMenuInflater().inflate(R.menu.logedinmenu, menu);
@@ -169,6 +187,10 @@ public class ArrActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 session.logoutUser();
+                return true;
+            case R.id.homeButton:
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
             default:
         }
         return super.onOptionsItemSelected(item);
