@@ -3,7 +3,6 @@ package no.usn.grupp1.arrangementapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,32 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import cz.intik.overflowindicator.OverflowPagerIndicator;
-
-/**
- * Created by finge on 16.02.2018.
- */
-
 public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
 
-
-    //Member variables
     private ArrayList<Arrangement> mArrData;
     private Context mContext;
-
 
     public ArrAdapter(Context mContext, ArrayList<Arrangement>  mArrData ) {
         this.mArrData = mArrData;
         this.mContext = mContext;
     }
-
-
 
     @Override
     public ArrAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,10 +36,10 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
         //Get current event
         Arrangement currentArr = mArrData.get(position);
 
-        //Populate the textviews with data
+        //Populate arractivity
         holder.bindTo(currentArr);
 
-
+        // landscape mode
         if(mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             Glide.with(mContext)
                     .load("http://kingbingfuji.synology.me/bilderApp/picture" + (currentArr.getPos() +1))
@@ -60,7 +47,7 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                     .centerCrop()
                     .into(holder.mArrImage);
         }
-
+        // portrait mode
         if(mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             Glide.with(mContext)
                     //.load(currentArr.getImageResource())
@@ -70,9 +57,6 @@ public class ArrAdapter extends RecyclerView.Adapter<ArrAdapter.ViewHolder> {
                     .into(holder.mArrImage);
         }
 
-
-        String pos = "" + currentArr.getPos();
-        Log.d("POSITION", pos);
     }
 
     @Override

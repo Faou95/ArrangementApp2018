@@ -2,9 +2,6 @@ package no.usn.grupp1.arrangementapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,12 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.os.AsyncTask;
-
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,14 +34,18 @@ public class ArrActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private ArrayList<Arrangement> mArrData;
+
     private ArrAdapter ArrAdapter;
+
     private SessionManager session;
+
     private IndefinitePagerIndicator indicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hovedside);
+
         session = new SessionManager(getApplicationContext());
         //Initialize the ArrayLIst that will contain the data
         mArrData = new ArrayList<>();
@@ -58,8 +57,6 @@ public class ArrActivity extends AppCompatActivity {
         //Set the Layout Manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-
-
         //Initialize the adapter and set it ot the RecyclerView
         ArrAdapter = new ArrAdapter(this, mArrData);
         mRecyclerView.setAdapter(ArrAdapter);
@@ -69,37 +66,10 @@ public class ArrActivity extends AppCompatActivity {
         snapHelper.attachToRecyclerView(mRecyclerView);
         indicator.attachToRecyclerView(mRecyclerView);
 
+        // intitialize data in background
         initData data = new initData();
         data.execute((Void) null);
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if(session.isLoggedIn()){
-            getMenuInflater().inflate(R.menu.logedinmenu, menu);
-        }else{
-            getMenuInflater().inflate(R.menu.hovedmenu, menu);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.login:
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
-                return true;
-            case R.id.userInfo:
-                Intent userIntent = new Intent(this, UserProfileActivity.class);
-                startActivity(userIntent);
-                return true;
-            case R.id.logout:
-                session.logoutUser();
-            default:
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public class initData extends AsyncTask<Void, Void, Boolean> {
@@ -173,5 +143,34 @@ public class ArrActivity extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    // MENY
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.logedinmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.hovedmenu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login:
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+                return true;
+            case R.id.userInfo:
+                Intent userIntent = new Intent(this, UserProfileActivity.class);
+                startActivity(userIntent);
+                return true;
+            case R.id.logout:
+                session.logoutUser();
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

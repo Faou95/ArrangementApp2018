@@ -1,23 +1,17 @@
 package no.usn.grupp1.arrangementapp;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 
-
+// Connects gridview with seat selection activity
 
 public class SeatAdapter extends BaseAdapter{
 
@@ -29,7 +23,6 @@ public class SeatAdapter extends BaseAdapter{
     }
 
     private Context context;
-
 
     @Override
     public int getCount() {
@@ -54,15 +47,11 @@ public class SeatAdapter extends BaseAdapter{
             seats = new View(context);
             seats = inflater.inflate(R.layout.simple_seat, null);
             ImageView imageView = seats.findViewById(R.id.seatImage);
-            //imageView.setImageResource(seatId[position]);
+
             if(seatId[position] == -1){
                 Glide.with(context).load(R.drawable.opptattsete).into(imageView);
             }else{
                 Glide.with(context).load(R.drawable.ledigsete).into(imageView);
-            }
-            for(int i = 0; i<seatId.length; i++){
-                String a = "" + i + "    seatid" + seatId[i];
-                Log.d("SEATID", a);
             }
         }
         else {

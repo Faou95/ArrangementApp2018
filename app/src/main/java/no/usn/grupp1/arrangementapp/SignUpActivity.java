@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -78,17 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*
-        for (String credential : getResources().getStringArray(R.array.userInfo)) {
-            String email = mEmail.getText().toString();
-            String[] pieces = credential.split(":");
-            if (pieces[0].equals(email)) {
-                onSignupFailed();
-            }
-            else {
-                onSignupSuccess();
-            }
-        }*/
     }
 
     public void onSignupFailed() {

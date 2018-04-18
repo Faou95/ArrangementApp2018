@@ -1,10 +1,6 @@
 package no.usn.grupp1.arrangementapp;
 
-/**
- * Created by finge on 16.02.2018.
- */
 public class Arrangement {
-
 
     private String tittel;
     private String description;
@@ -14,7 +10,6 @@ public class Arrangement {
     private int fee;
     private final int pos;
     private final int eventID;
-
 
 
     public Arrangement(String tittel, String description, String date, String time, String age, int fee , int pos, int eventID) {
@@ -28,8 +23,6 @@ public class Arrangement {
 
         this.eventID = eventID;
     }
-
-
 
     public String getTittel() {
         return tittel;

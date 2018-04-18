@@ -37,9 +37,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity android:name=".ArrActivity" />
-        <activity android:name=".TicketActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
         <activity android:name=".LoadSeatData"></activity>
         <activity android:name=".SeatSelectionActivity"
             android:configChanges="orientation"

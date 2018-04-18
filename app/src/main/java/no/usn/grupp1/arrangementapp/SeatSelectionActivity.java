@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
@@ -31,10 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 import static com.android.volley.toolbox.Volley.newRequestQueue;
 
@@ -55,6 +50,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_selection);
+
         eventID = getIntent().getIntExtra("eventID",0);
         title = getIntent().getStringExtra("title");
         seatId = getIntent().getIntArrayExtra("OpptatteSeter");
@@ -149,6 +145,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        // deselect method
         for (JSONObject j : tickets) {
             if(j.toString().equals(nyTicket.toString())){
                 finnSete(eventID,seatID+1);
@@ -246,7 +243,13 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
     }
 
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
 
+    // Meny
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(session.isLoggedIn()){
@@ -273,13 +276,6 @@ public class SeatSelectionActivity extends AppCompatActivity {
             default:
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public boolean isOnline() {
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }
